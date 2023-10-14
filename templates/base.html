@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../static/icon/css/all.min.css">
+    <title>To do list app</title>
+  </head>
+  <body>
+
+    <header>
+      <nav class="navbar navbar-expand-lg">
+        <div class="container">
+          <a class="navbar-brand" href="#"></a>
+            <img class=" mt-2 mb-2" src="../static/assets/img/logo-xanh4sao-972-nen-20211023050846-e.png" alt="" height="60px" />
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          
+          <div class="collapse navbar-collapse mt-sm-0 mt-3" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-2 gap-2">
+              {% if user %}
+                <li class="nav-item d-flex dropdown">
+                  <img style="border-radius: 20px;" src="../static/assets/img/son.png" height="40px" width="40px" class=" object-fit-cover" alt="">
+                  <a class="nav-link fw-medium dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{ user.last_name + ' ' + user.first_name }}</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Thông tin cá nhân</a></li>
+                    <li><a class="dropdown-item" href="#">Đổi mật khẩu</a></li>
+                    <li><a class="dropdown-item" href="/logout">Đăng xuất</a></li>
+                  </ul>
+                </li>
+              {% endif %}
+              <li class="nav-item d-flex">
+                
+                <a class="nav-link" aria-current="page" href="#"><i class="fa-solid fa-house me-2"></i>Trang chủ</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa-solid fa-bell me-2"></i>Tin tức</a>
+              </li>
+            </ul>
+            <form class="" role="search">
+              <input class="form-control me-2" type="search" placeholder="Tìm kiếm..." aria-label="Search"/>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main style="background-color: #e7ecf0;">
+        {% with messages= get_flashed_messages() %}
+          {% if messages %}
+            <div>
+              {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+      <footer>
+        <div class=" p-4 bg-primary-subtle text-center">
+          <p class="mb-0 fw-medium">© 2023 Bản quyền thuộc về <a href="https://www.facebook.com/sonnv2212" class=" text-decoration-none text-primary" target="_blank">Nguyễn Văn Sơn</a></p>
+        </div>
+      </footer>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.10.2/umd/popper.min.js" integrity="sha512-nnzkI2u2Dy6HMnzMIkh7CPd1KX445z38XIu4jG1jGw7x5tSL3VBjE44dY4ihMU1ijAQV930SPM12cCFrB18sVw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>

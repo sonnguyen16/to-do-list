@@ -1,0 +1,259 @@
+{% extends "base.html" %} {% block content %}
+<div class="container pt-5 pb-5">
+  <div class="card border-0 rounded-4 bg-white p-4">
+    <div class="row">
+      <div class="col-lg-2 d-flex flex-column align-items-center">
+        <img
+          src="../static/assets/img/son.png"
+          style="border-radius: 70px"
+          width="140px"
+          height="140px"
+          class="object-fit-cover border border-primary p-2"
+          alt=""
+        />
+        <p>
+          <a class="btn btn-outline text-primary mt-2">Xem chi tiết</a>
+        </p>
+      </div>
+      <div class="col-lg-5">
+        <div class="card p-3 rounded-4">
+          <h6 class="fw-bold text-primary mb-3">
+            <i class="fa-solid fa-user me-2"></i>
+            Thông tin sinh viên
+          </h6>
+          <div class="row">
+            <div class="col">
+              <p>
+                <span class="fw-bold">Họ và tên:</span>
+                {{ user.first_name + " " + user.last_name }}
+              </p>
+              <p>
+                <span class="fw-bold">Giới tính:</span>
+                Nam
+              </p>
+              <p>
+                <span class="fw-bold">Ngày sinh:</span>
+                22/12/1999
+              </p>
+              <p>
+                <span class="fw-bold">Lớp:</span>
+                DH20LT
+              </p>
+              <p>
+                <span class="fw-bold">Nơi sinh:</span>
+                Hải Phòng
+              </p>
+            </div>
+            <div class="col">
+              <p>
+                <span class="fw-bold">Khóa học:</span>
+                2020
+              </p>
+              <p>
+                <span class="fw-bold">Bậc học:</span>
+                Đại học
+              </p>
+              <p>
+                <span class="fw-bold">Ngành:</span>
+                Công nghệ thông tin
+              </p>
+              <p>
+                <span class="fw-bold">Loại đào tạo:</span>
+                Chính quy
+              </p>
+              <p>
+                <span class="fw-bold">Trạng thái:</span>
+                Tích lũy tín chỉ
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5 mt-lg-0 mt-4">
+        <div class="card p-3 rounded-4">
+          <div class="d-flex justify-content-between">
+            <h6 class="fw-bold text-primary mb-3">
+              <i class="fa-solid fa-list-check me-2"></i>
+              To Do List
+            </h6>
+            <a
+              class="text-decoration-none fw-bold"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+            >
+              <i class="fa-solid fa-add"></i>
+              Add task
+            </a>
+          </div>
+          <div class="mt-2">
+            {% if user.tasks%} {% for todoitem in user.tasks %} {% if
+            todoitem.isCompleted == 0 %}
+            <div>
+              <div
+                class="d-flex align-items-center mb-3 border-bottom p-2 pt-0"
+              >
+                <h6 class="text-dark mb-0">{{ todoitem.description }}</h6>
+                {% if todoitem.priority_id == 1 %}
+                <span class="badge bg-info ms-auto me-auto">
+                  {{ todoitem.priority.text }}
+                </span>
+                {% elif todoitem.priority_id == 2 %}
+                <span class="badge bg-success ms-auto me-auto">
+                  {{ todoitem.priority.text }}
+                </span>
+                {% elif todoitem.priority_id == 3 %}
+                <span class="badge bg-warning ms-auto me-auto">
+                  {{ todoitem.priority.text }}
+                </span>
+                {% else %}
+                <span class="badge bg-danger ms-auto me-auto">
+                  {{ todoitem.priority.text }}
+                </span>
+                {% endif %}
+                <div>
+                  <a
+                    href="/complete_task/{{ todoitem.task_id }}"
+                    class="btn btn-outline-danger ms-auto btn-sm"
+                  >
+                    <i class="fa-solid fa-check"></i>
+                  </a>
+                  <a
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal{{ todoitem.task_id }}"
+                    class="btn btn-outline-primary ms-auto btn-sm"
+                    data-id="{{ todoitem.priority_id }}"
+                    onClick="selectedIndex(this)"
+                  >
+                    <i class="fa-solid fa-edit"></i>
+                  </a>
+                  <a
+                    href="/delete_task/{{ todoitem.task_id }}"
+                    class="btn btn-outline-danger ms-auto btn-sm"
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </a>
+                </div>
+                <div
+                  class="modal fade"
+                  id="exampleModal{{ todoitem.task_id }}"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Edit task
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <form
+                        action="/edit_task/{{ todoitem.task_id }}"
+                        method="post"
+                      >
+                        {{ form.hidden_tag() }}
+                        <div class="modal-body">
+                          {{ form.description(placeholder="Enter description",
+                          class="form-control mb-2", value=todoitem.description)
+                          }} {% if form.description.errors %} {% for error in
+                          form.description.errors %}
+                          <div class="alert alert-danger mt-2">
+                            <strong>{{ error }}</strong>
+                          </div>
+                          {% endfor %} {% endif %} {{ form.priority(
+                          class="form-control mb-2", id=todoitem.priority_id )
+                          }} {% if form.priority.errors %} {% for error in
+                          form.priority.errors %}
+                          <div class="alert alert-danger mt-2">
+                            <strong>{{ error }}</strong>
+                          </div>
+                          {% endfor %} {% endif %}
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                          >
+                            Close
+                          </button>
+                          {{ form.submit(class="btn btn-primary text-white") }}
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endif %} {% endfor %} {% else %}
+            <p class="text-muted">Không có công việc nào</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal add -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add new task</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form action="/new_task" method="post">
+        {{ form.hidden_tag() }}
+        <div class="modal-body">
+          {{ form.description(placeholder="Enter description",
+          class="form-control mb-2") }} {% if form.description.errors %} {% for
+          error in form.description.errors %}
+          <div class="alert alert-danger mt-2">
+            <strong>{{ error }}</strong>
+          </div>
+          {% endfor %} {% endif %} {{ form.priority( class="form-control mb-2")
+          }} {% if form.priority.errors %} {% for error in form.priority.errors
+          %}
+          <div class="alert alert-danger mt-2">
+            <strong>{{ error }}</strong>
+          </div>
+          {% endfor %} {% endif %}
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          {{ form.submit(class="btn btn-primary text-white") }}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  function selectedIndex(a) {
+    const id = a.getAttribute("data-id");
+    document.getElementById(id).selectedIndex = id - 1;
+  }
+</script>
+{% endblock %}

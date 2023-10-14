@@ -1,0 +1,93 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container pt-5 pb-5">
+  <div
+    class="card border-0 rounded-4 bg-white"
+    style="box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3)"
+  >
+    <div class="row">
+      <div class="col-lg-6 d-lg-block d-none">
+        <img
+          src="../static/assets/img/bg.jpg"
+          style="
+            border-top-left-radius: 16px;
+            border-bottom-left-radius: 16px;
+            filter: brightness(0.8);
+            object-fit: cover;
+          "
+          class="w-100 h-100"
+          alt=""
+        />
+      </div>
+      <div class="col-lg-6 p-5">
+        <h2 class="text-center text-primary">
+          <img
+            src="../static/assets/img/logo.png"
+            width="60px"
+            class="me-2"
+            alt=""
+          />
+          Đăng ký
+        </h2>
+        <form action="" method="post" class="p-lg-3 p-0 pe-lg-5 ps-lg-5">
+          {{ form.hidden_tag() }}
+          <div class="mb-3">
+            {{ form.first_name.label(class="form-label") }} {{
+            form.first_name(class="form-control") }} {% if
+            form.first_name.errors %} {% for error in form.first_name.errors %}
+            <div class="alert alert-danger mt-2">
+              <strong>{{ error }}</strong>
+            </div>
+            {% endfor %} {% endif %}
+          </div>
+          <div class="mb-3">
+            {{ form.last_name.label(class="form-label") }} {{
+            form.last_name(class="form-control") }} {% if form.last_name.errors
+            %} {% for error in form.last_name.errors %}
+            <div class="alert alert-danger mt-2">
+              <strong>{{ error }}</strong>
+            </div>
+            {% endfor %} {% endif %}
+          </div>
+          <div class="mb-3">
+            {{ form.email.label(class="form-label") }} {{
+            form.email(class="form-control") }} {% if form.email.errors %} {%
+            for error in form.email.errors %}
+            <div class="alert alert-danger mt-2">
+              <strong>{{ error }}</strong>
+            </div>
+            {% endfor %} {% endif %}
+          </div>
+          <div class="mb-3">
+            {{ form.password.label(class="form-label") }} {{
+            form.password(class="form-control") }} {% if form.password.errors %}
+            {% for error in form.password.errors %}
+            <div class="alert alert-danger mt-2">
+              <strong>{{ error }}</strong>
+            </div>
+            {% endfor %} {% endif %}
+          </div>
+          <div class="mb-3">
+            {{ form.confirm_password.label(class="form-label") }} {{
+            form.confirm_password(class="form-control") }} {% if
+            form.confirm_password.errors %} {% for error in
+            form.confirm_password.errors %}
+            <div class="alert alert-danger mt-2">
+              <strong>{{ error }}</strong>
+            </div>
+            {% endfor %} {% endif %}
+          </div>
+
+          {{ form.submit(class="btn btn-primary text-white form-control mt-3")
+          }}
+          <span class="d-block text-center mt-3">
+            Đã có tài khoản?
+            <a href="/" class="text-decoration-none">Đăng nhập</a>
+          </span>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

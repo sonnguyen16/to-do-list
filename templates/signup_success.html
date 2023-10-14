@@ -1,0 +1,61 @@
+{% extends "base.html" %} {% block content %}
+
+<div class="container pt-5 pb-5">
+  <div
+    class="card border-0 rounded-4 bg-white"
+    style="box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3)"
+  >
+    <div class="row">
+      <div class="col-lg-6 d-lg-block d-none">
+        <img
+          src="../static/assets/img/bg.jpg"
+          style="
+            border-top-left-radius: 16px;
+            border-bottom-left-radius: 16px;
+            filter: brightness(0.8);
+            object-fit: cover;
+          "
+          class="w-100 h-100"
+          alt=""
+        />
+      </div>
+      <div class="col-lg-6 p-5">
+        <h3 class="text-center text-primary">
+          <i
+            class="fa-solid fa-check-circle text-primary"
+            style="font-size: 35px"
+          ></i>
+          Đăng ký thành công
+        </h3>
+        <div class="mt-4 fs-6">
+          <table class="table table-bordered">
+            <tr>
+              <td class="fw-bold">Tên:</td>
+              <td>{{ user.last_name + ' ' + user.first_name }}</td>
+            </tr>
+            <tr>
+              <td class="fw-bold">Email:</td>
+              <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+              <td class="fw-bold">Mật khẩu:</td>
+              <td>{{ user.password_hash[:20] }}...</td>
+            </tr>
+            <tr>
+              <td colspan="2" class="text-danger">
+                Lưu ý: Không chia sẻ thông tin này với bất kỳ ai !!!
+              </td>
+            </tr>
+          </table>
+          <p class="text-center fs-5">
+            <a href="/home" class="btn btn-primary text-white mt-3 fs-6">
+              Đăng nhập ngay
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
