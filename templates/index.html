@@ -119,6 +119,7 @@
                   </a>
                   <a
                     data-bs-toggle="modal"
+                    id="a_{{ todoitem.task_id }}"
                     data-bs-target="#exampleModal{{ todoitem.task_id }}"
                     class="btn btn-outline-primary ms-auto btn-sm"
                     data-id="{{ todoitem.priority_id }}"
@@ -167,8 +168,8 @@
                             <strong>{{ error }}</strong>
                           </div>
                           {% endfor %} {% endif %} {{ form.priority(
-                          class="form-control mb-2", id=todoitem.priority_id )
-                          }} {% if form.priority.errors %} {% for error in
+                          class="form-control mb-2", id=todoitem.task_id ) }} {%
+                          if form.priority.errors %} {% for error in
                           form.priority.errors %}
                           <div class="alert alert-danger mt-2">
                             <strong>{{ error }}</strong>
@@ -252,8 +253,9 @@
 </div>
 <script>
   function selectedIndex(a) {
-    const id = a.getAttribute("data-id");
-    document.getElementById(id).selectedIndex = id - 1;
+    const data_id = a.getAttribute("data-id");
+    const id = a.getAttribute("id").split("_")[1];
+    document.getElementById(id).selectedIndex = data_id - 1;
   }
 </script>
 {% endblock %}
